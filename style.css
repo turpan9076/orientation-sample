@@ -1,0 +1,7 @@
+.rotate_test {
+    width: 100px;
+    background-color:  #ccc;
+    padding: 78px 40px;
+    margin: 100px auto;
+    transform:rotate(45deg);    /* 中心を基準点に回転する */
+}
