@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="icon" href="image/tiger_beetle_head.ico">
+        <link rel="apple-touch-icon" href="image/tiger_beetle.png" sizes="180x180">
+        <title>TIGER BEETLE</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+                let degrees = 0.1;
+                let direction;
+                if (
+                    (degrees > 337.5 && degrees < 360) ||
+                    (degrees > 0 && degrees < 22.5)
+                ) {
+                    direction = "北";
+                } else if (degrees > 22.5 && degrees < 67.5) {
+                    direction = "北東";
+                } else if (degrees > 67.5 && degrees < 112.5) {
+                    direction = "東";
+                } else if (degrees > 112.5 && degrees < 157.5) {
+                    direction = "東南";
+                } else if (degrees > 157.5 && degrees < 202.5) {
+                    direction = "南";
+                } else if (degrees > 202.5 && degrees < 247.5) {
+                    direction = "南西";
+                } else if (degrees > 247.5 && degrees < 292.5) {
+                    direction = "西";
+                } else if (degrees > 292.5 && degrees < 337.5) {
+                    direction = "北西";
+                }
+            document.write(direction + ":" + degrees + "°");
+            if (direction != "北"){
+                window.alert("逆走しています！")
+            }
+        </script>
+    </body>
+</html>

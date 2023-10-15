@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="icon" href="image/tiger_beetle_head.ico">
+        <link rel="apple-touch-icon" href="image/tiger_beetle.png" sizes="180x180">
+        <title>TIGER BEETLE</title>
+    </head>
+    <body>
+      <script type="text/javascript">
+        window.addEventListener("deviceorientation", orientation, true);
+
+        let alpha, beta, gamma;
+        function orientation(event) {
+            alpha = event.alpha;
+            beta = event.beta;
+            gamma = event.gamma;
+        }
+
+        // var alpha;
+        // var beta;
+        // var gamma;
+ 
+        // window.addEventListener('deviceorientation', function(e) {
+        //     alpha = e.alpha; //方向（方角）を取得する。値は0〜360。
+        //     beta = e.beta; //上下の傾きを取得。値は-180〜180。
+        //     gamma = e.gamma; //左右の傾きを取得。値は-90〜90。
+        // }, true);
+        document.write(alpha + " : " + beta + " : " + gamma);
+
+        document.write("イベント登録完了");
+    </script>
+    </body>
+</html>

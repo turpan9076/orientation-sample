@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>方向検出アプリ</title>
+</head>
+<body>
+    <h1>スマートフォンの向きを検出</h1>
+    <p>デバイスの向き: <span id="direction"></span></p>
+
+    <script>
+        // ページが読み込まれた際に実行される関数
+        window.addEventListener('load', function () {
+            // ブラウザがDeviceOrientationEventをサポートしているか確認
+            if (window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', handleOrientation);
+            } else {
+                alert("ご使用のデバイスは方向検出をサポートしていません。");
+            }
+        });
+
+        function handleOrientation(event) {
+            var alpha = event.alpha; // z軸方向の角度 (0-360)
+            var beta = event.beta;   // x軸方向の角度 (-180-180)
+            var gamma = event.gamma; // y軸方向の角度 (-90-90)
+
+            // 方向を計算して表示
+            var direction = calculateDirection(alpha);
+            document.getElementById('direction').textContent = "SEX";
+        }
+
+        function calculateDirection(alpha) {
+            if (alpha >= 45 && alpha < 135) {
+                return "東向き";
+            } else if (alpha >= 135 && alpha < 225) {
+                return "南向き";
+            } else if (alpha >= 225 && alpha < 315) {
+                return "西向き";
+            } else {
+                return "北向き";
+            }
+        }
+    </script>
+</body>
+</html>
