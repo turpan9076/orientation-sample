@@ -35,6 +35,7 @@ function orientation(event) {
     let alpha = event.alpha;
     let beta = event.beta;
     let gamma = event.gamma;
+    const needle = document.getElementById("needle");
 
     let degrees;
     if(os == "iphone") {
@@ -45,10 +46,7 @@ function orientation(event) {
         // deviceorientationabsoluteイベントのalphaを補正
         degrees = compassHeading(alpha, beta, gamma);
     }
-
-    
-    const needle = document.getElementById("needle");
-    needle.style.transform = `rotate(${degrees}deg)`;
+    needle.style.transform = `rotate(${100}deg)`;
     
     let direction;
     if (
