@@ -46,6 +46,10 @@ function orientation(event) {
         degrees = compassHeading(alpha, beta, gamma);
     }
 
+    
+    const needle = document.getElementById("needle");
+    needle.style.transform = `rotate(${degrees}deg)`;
+    
     let direction;
     if (
         (degrees > 337.5 && degrees < 360) ||
@@ -141,13 +145,3 @@ function permitDeviceOrientationForSafari() {
         })
         .catch(console.error);
 }
-
-const needle = document.getElementById("needle");
-
-function rotateNeedle(degree) {
-    needle.style.transform = `rotate(${degree}deg)`; // 指定された角度に回転
-}
-
-// ここでdegreeの値を設定して、針が指定された角度に傾く角度を制御できます
-const degree = 60; // 例: 45度
-rotateNeedle(degree);
