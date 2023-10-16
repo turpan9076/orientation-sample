@@ -1,7 +1,24 @@
-.rotate_test {
-    width: 100px;
-    background-color:  #ccc;
-    padding: 78px 40px;
-    margin: 100px auto;
-    transform:rotate(45deg);    /* 中心を基準点に回転する */
+.compass {
+    width: 200px;
+    height: 200px;
+    background-color: #3498db;
+    border-radius: 50%;
+    position: relative;
+}
+
+.base {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.needle {
+    width: 2px;
+    height: 100px;
+    background-color: #f00;
+    position: absolute;
+    transform-origin: 50% 0;
+    transform: rotate(0deg);
+    transition: transform 0.5s ease;
 }
