@@ -19,6 +19,6 @@
     background-color: #f00;
     position: absolute;
     transform-origin: 50% 0;
-    transform: rotate(180deg);
+    transform: rotate(0deg);
     transition: transform 0.5s ease;
 }
