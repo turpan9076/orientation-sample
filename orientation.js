@@ -49,7 +49,7 @@ function orientation(event) {
     if (degrees > 0 && degrees < 180){
         needle.style.transform = `rotate(${-(180+degrees)}deg)`;
     }else if (degrees > 180 && degrees < 360){
-        needle.style.transform = `rotate(${-degrees}deg)`;
+        needle.style.transform = `rotate(${180-degrees}deg)`;
     }
     let direction;
     if (
