@@ -46,8 +46,11 @@ function orientation(event) {
         // deviceorientationabsoluteイベントのalphaを補正
         degrees = compassHeading(alpha, beta, gamma);
     }
-    needle.style.transform = `rotate(${360-alpha}deg)`;
-    
+    if (degrees > 0 && degrees < 180){
+        needle.style.transform = `rotate(${-(180+degrees)}deg)`;
+    }else if (degrees > 180 && degrees < 360){
+        needle.style.transform = `rotate(${-degrees}deg)`;
+    }
     let direction;
     if (
         (degrees > 337.5 && degrees < 360) ||
