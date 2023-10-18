@@ -16,9 +16,9 @@
 .needle {
     width: 2px;
     height: 100px;
-    background-color: #f00;
+    background-color: #ff0;
     position: absolute;
-    transform-origin: center;
+    transform-origin: 50% 0;
     transform: rotate(0deg);
     transition: transform 0.5s ease;
 }
