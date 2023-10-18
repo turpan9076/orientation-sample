@@ -16,7 +16,7 @@
 .needle {
     width: 2px;
     height: 100px;
-    background-color: #000;
+    background-color: #F00;
     position: absolute;
     transform-origin: 50% 0;
     transform: rotate(180deg);
