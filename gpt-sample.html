@@ -1,43 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>方向検出アプリ</title>
+    <meta charset="UTF-8">
+    <title>位置情報と進行方向のWebアプリ</title>
+    <style>
+        /* スタイルの追加 */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>スマートフォンの向きを検出</h1>
-    <p>デバイスの向き: <span id="direction"></span></p>
+    <h1>位置情報と進行方向</h1>
+    <p>位置情報を取得して、2つの位置の進行方向を把握します。</p>
+
+    <button id="startButton">位置情報を取得</button>
+    
+    <div id="locationInfo">
+        <p>現在の位置情報: <span id="currentLocation"></span></p>
+        <p>目的地1の座標: <span id="destination1"></span></p>
+        <p>目的地2の座標: <span id="destination2"></span></p>
+        <p>進行方向: <span id="direction"></span></p>
+    </div>
 
     <script>
-        // ページが読み込まれた際に実行される関数
-        window.addEventListener('load', function () {
-            // ブラウザがDeviceOrientationEventをサポートしているか確認
-            if (window.DeviceOrientationEvent) {
-                window.addEventListener('deviceorientation', handleOrientation);
+        document.getElementById("startButton").addEventListener("click", getLocation);
+
+        function getLocation() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const currentLocation = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+
+                    // 目的地の座標を設定
+                    const destination1 = { latitude: 12.34, longitude: 56.78 }; // ここに目的地1の座標を入力
+                    const destination2 = { latitude: 34.56, longitude: 78.90 }; // ここに目的地2の座標を入力
+
+                    // 進行方向を計算
+                    const direction1 = calculateDirection(currentLocation, destination1);
+                    const direction2 = calculateDirection(currentLocation, destination2);
+
+                    document.getElementById("currentLocation").textContent = `緯度: ${currentLocation.latitude}, 経度: ${currentLocation.longitude}`;
+                    document.getElementById("destination1").textContent = `緯度: ${destination1.latitude}, 経度: ${destination1.longitude}`;
+                    document.getElementById("destination2").textContent = `緯度: ${destination2.latitude}, 経度: ${destination2.longitude}`;
+                    document.getElementById("direction").textContent = `目的地1への進行方向: ${direction1}, 目的地2への進行方向: ${direction2}`;
+                });
             } else {
-                alert("ご使用のデバイスは方向検出をサポートしていません。");
+                alert("位置情報を取得できません。");
             }
-        });
-
-        function handleOrientation(event) {
-            var alpha = event.alpha; // z軸方向の角度 (0-360)
-            var beta = event.beta;   // x軸方向の角度 (-180-180)
-            var gamma = event.gamma; // y軸方向の角度 (-90-90)
-
-            // 方向を計算して表示
-            var direction = calculateDirection(alpha);
-            document.getElementById('direction').textContent = "SEX";
         }
 
-        function calculateDirection(alpha) {
-            if (alpha >= 45 && alpha < 135) {
-                return "東向き";
-            } else if (alpha >= 135 && alpha < 225) {
-                return "南向き";
-            } else if (alpha >= 225 && alpha < 315) {
-                return "西向き";
-            } else {
-                return "北向き";
-            }
+        function calculateDirection(currentLocation, destination) {
+            // 現在の位置と目的地の角度を計算
+            const lat1 = currentLocation.latitude;
+            const lon1 = currentLocation.longitude;
+            const lat2 = destination.latitude;
+            const lon2 = destination.longitude;
+            const angle = Math.atan2(lat2 - lat1, lon2 - lon1);
+            const degrees = (angle * 180) / Math.PI;
+            return degrees;
         }
     </script>
 </body>
