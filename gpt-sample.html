@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>進行方向を把握するWebアプリ</title>
+    <title>進行方向を方角で表示するWebアプリ</title>
     <style>
         /* スタイルの追加 */
         body {
@@ -12,8 +12,8 @@
     </style>
 </head>
 <body>
-    <h1>進行方向を把握するWebアプリ</h1>
-    <p>10秒ごとに位置情報を取得し、進行方向を計算します。</p>
+    <h1>進行方向を方角で表示するWebアプリ</h1>
+    <p>10秒ごとに位置情報を取得し、進行方向を方角で表示します。</p>
 
     <button id="startButton">開始</button>
     
@@ -54,21 +54,36 @@
             if (previousPosition) {
                 const direction = calculateDirection(previousPosition, currentLocation);
                 document.getElementById("previousLocation").textContent = `緯度: ${previousPosition.latitude}, 経度: ${previousPosition.longitude}`;
-                document.getElementById("direction").textContent = `進行方向: ${direction} 度`;
+                document.getElementById("direction").textContent = `進行方向: ${direction}`;
             }
 
             previousPosition = currentLocation;
         }
 
         function calculateDirection(previousLocation, currentLocation) {
-            // 前回の位置と現在の位置から進行方向を計算
             const lat1 = previousLocation.latitude;
             const lon1 = previousLocation.longitude;
             const lat2 = currentLocation.latitude;
             const lon2 = currentLocation.longitude;
-            const angle = Math.atan2(lat2 - lat1, lon2 - lon1);
-            const degrees = (angle * 180) / Math.PI;
-            return degrees;
+
+            // 2点間の角度を計算
+            const dLon = lon2 - lon1;
+            const y = Math.sin(dLon) * Math.cos(lat2);
+            const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+            const brng = Math.atan2(y, x);
+
+            // 方位を計算 (ラジアンから度に変換)
+            const degrees = (brng * 180 / Math.PI + 360) % 360;
+
+            // 8つの方角にマッピング
+            const direction = getCardinalDirection(degrees);
+            return direction;
+        }
+
+        function getCardinalDirection(degrees) {
+            const cardinals = ["北", "北北東", "東北", "東", "東南", "南南東", "南", "南南西", "西南", "西", "西北", "北北西"];
+            const index = Math.round((degrees % 360) / 30);
+            return cardinals[index];
         }
 
         function handleError(error) {
