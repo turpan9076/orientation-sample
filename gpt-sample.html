@@ -81,8 +81,8 @@
         }
 
         function getCardinalDirection(degrees) {
-            const cardinals = ["北", "北北東", "東北", "東", "東南", "南南東", "南", "南南西", "西南", "西", "西北", "北北西"];
-            const index = Math.round((degrees % 360) / 30);
+            const cardinals = ["北", "北東", "東", "南東", "南", "南西", "西", "北西"];
+            const index = Math.round((degrees % 360) / 45);
             return cardinals[index];
         }
 
