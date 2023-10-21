@@ -31,15 +31,16 @@
 
         function startTracking() {
             if ("geolocation" in navigator) {
+                // 最初に1回位置情報を取得
+                navigator.geolocation.getCurrentPosition(updateLocation, handleError, { enableHighAccuracy: true });
+
                 // 10秒ごとに位置情報を取得
-                watchID = setInterval(getCurrentLocation, 10000);
+                watchID = setInterval(function() {
+                    navigator.geolocation.getCurrentPosition(updateLocation, handleError, { enableHighAccuracy: true });
+                }, 10000);
             } else {
                 alert("位置情報を取得できません。");
             }
-        }       
-
-        function getCurrentLocation() {
-            navigator.geolocation.getCurrentPosition(updateLocation, handleError, { enableHighAccuracy: true });
         }
 
         function updateLocation(position) {
