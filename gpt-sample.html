@@ -13,52 +13,48 @@
 </head>
 <body>
     <h1>位置情報と進行方向</h1>
-    <p>位置情報を取得して、2つの位置の進行方向を把握します。</p>
+    <p>位置情報を取得して、進行方向を把握します。</p>
 
     <button id="startButton">位置情報を取得</button>
     
     <div id="locationInfo">
-        <p>現在の位置情報: <span id="currentLocation"></span></p>
-        <p>目的地1の座標: <span id="destination1"></span></p>
-        <p>目的地2の座標: <span id="destination2"></span></p>
         <p>進行方向: <span id="direction"></span></p>
     </div>
 
     <script>
-        document.getElementById("startButton").addEventListener("click", getLocation);
+        let watchId;
+        let lastPosition;
 
-        function getLocation() {
+        document.getElementById("startButton").addEventListener("click", startLocationUpdates);
+
+        function startLocationUpdates() {
             if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    const currentLocation = {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude
-                    };
-
-                    // 目的地の座標を設定
-                    const destination1 = { latitude: 12.34, longitude: 56.78 }; // ここに目的地1の座標を入力
-                    const destination2 = { latitude: 34.56, longitude: 78.90 }; // ここに目的地2の座標を入力
-
-                    // 進行方向を計算
-                    const direction1 = calculateDirection(currentLocation, destination1);
-                    const direction2 = calculateDirection(currentLocation, destination2);
-
-                    document.getElementById("currentLocation").textContent = `緯度: ${currentLocation.latitude}, 経度: ${currentLocation.longitude}`;
-                    document.getElementById("destination1").textContent = `緯度: ${destination1.latitude}, 経度: ${destination1.longitude}`;
-                    document.getElementById("destination2").textContent = `緯度: ${destination2.latitude}, 経度: ${destination2.longitude}`;
-                    document.getElementById("direction").textContent = `目的地1への進行方向: ${direction1}, 目的地2への進行方向: ${direction2}`;
-                });
+                watchId = navigator.geolocation.watchPosition(updateLocation);
             } else {
                 alert("位置情報を取得できません。");
             }
         }
 
-        function calculateDirection(currentLocation, destination) {
-            // 現在の位置と目的地の角度を計算
-            const lat1 = currentLocation.latitude;
-            const lon1 = currentLocation.longitude;
-            const lat2 = destination.latitude;
-            const lon2 = destination.longitude;
+        function updateLocation(position) {
+            const currentLocation = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            };
+
+            if (lastPosition) {
+                const direction = calculateDirection(lastPosition, currentLocation);
+                document.getElementById("direction").textContent = `進行方向: ${direction}度`;
+            }
+
+            lastPosition = currentLocation;
+        }
+
+        function calculateDirection(prevLocation, currentLocation) {
+            // 2つの位置情報間の方向を計算
+            const lat1 = prevLocation.latitude;
+            const lon1 = prevLocation.longitude;
+            const lat2 = currentLocation.latitude;
+            const lon2 = currentLocation.longitude;
             const angle = Math.atan2(lat2 - lat1, lon2 - lon1);
             const degrees = (angle * 180) / Math.PI;
             return degrees;
